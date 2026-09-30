@@ -1,0 +1,5 @@
+demographic_parity_difference,equalized_odds_difference,model,attribute
+0.17846436306581237,0.11969884856301932,logistic_regression,sex
+0.19913967611336036,0.2902097902097902,logistic_regression,race
+0.15728818283166107,0.10306943874186608,random_forest,sex
+0.18901821862348178,0.2121212121212121,random_forest,race

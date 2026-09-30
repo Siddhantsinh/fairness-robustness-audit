@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+data/*.csv
+data/*.parquet
+!data/README.md
+.ipynb_checkpoints/
+*.egg-info/

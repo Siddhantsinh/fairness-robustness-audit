@@ -1,0 +1,42 @@
+# Locked evaluation protocol — fill in during Phase 0-1, then avoid
+# editing after you've seen fairness/robustness results (Phase 5 rule).
+# If you must change something later, log the change below with a date
+# and reason instead of silently editing.
+
+dataset:
+  name: "adult_income"
+  source_url: "https://archive.ics.uci.edu/dataset/2/adult"
+  license: "CC BY 4.0"
+
+target:
+  column: "income"
+  positive_label: ">50K"
+
+groups:
+  attributes: ["sex", "race"]
+  intersectional: false   # set true once single-attribute analysis is stable
+
+split:
+  test_size: 0.2
+  random_seed: 42
+  stratify_on: target      # or a group column, if justified
+
+metrics:
+  primary: f1               # single number used for model selection
+  secondary: [accuracy, precision, recall, roc_auc, balanced_accuracy]
+  fairness: [demographic_parity_difference, equalized_odds_difference]
+  confidence_interval_method: bootstrap   # bootstrap | repeated_splits
+
+decision_threshold: 0.5
+
+robustness:
+  thresholds_to_test: [0.30, 0.40, 0.50, 0.60, 0.70]
+  noise_levels: [0.0, 0.05, 0.10, 0.20]
+  missingness_rates: [0.0, 0.10, 0.20, 0.30]
+  shift_definition: "age_subpopulation_shift"    # evaluate on younger (<=35) vs older (>35) cohorts
+
+mitigation:
+  method: "threshold_adjustment"              # threshold_adjustment (Fairlearn ThresholdOptimizer) | reweighting
+
+# Change log (append, never rewrite silently)
+# - 2026-09-30: Locked evaluation protocol initialized for UCI Adult Census Income audit (Phase 2 & 5).
